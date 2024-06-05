@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service-20i-0999
+  labels:
+    app: backend
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 0999
+      nodePort: 30098
+  selector:
+    app: backend
