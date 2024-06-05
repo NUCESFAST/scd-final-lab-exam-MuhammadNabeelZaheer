@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "0999:0999"
+    depends_on:
+      - event-bus
+    networks:
+      - eduhub-network
+
+  auth:
+    build:
+      context: ./Auth
+      dockerfile: Dockerfile
+    ports:
+      - "0999:0999"
+    depends_on:
+      - event-bus
+    networks:
+      - eduhub-network
+
+  classrooms:
+    build:
+      context: ./Classrooms
+      dockerfile: Dockerfile
+    ports:
+      - "0999:0999"
+    depends_on:
+      - event-bus
+    networks:
+      - eduhub-network
+
+  post:
+    build:
+      context: ./Post
+      dockerfile: Dockerfile
+    ports:
+      - "0999:0999"
+    depends_on:
+      - event-bus
+    networks:
+      - eduhub-network
+
+  event-bus:
+    build:
+      context: ./event-bus
+      dockerfile: Dockerfile
+    ports:
+      - "0999:0999"
+    networks:
+      - eduhub-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - eduhub-network
+
+networks:
+  eduhub-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
